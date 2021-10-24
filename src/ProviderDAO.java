@@ -1,59 +1,74 @@
-package com.serbatic.course.datamodel.dao;
+
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 
-import com.serbatic.course.datamodel.entities.xmlmapping.Provider;
-import com.serbatic.course.datamodel.utils.StringUtil;
+
+
 
 public abstract class ProviderDAO {
-
-	public static void insertProviders(Session s, int numProvider) {
-		for (int id = 1; id <= numProvider; id++) {
-			insertProvider(s, id);
-		}
-	}
 	
-	public static void insertProvider(Session s, int genId) {
-		String cif = StringUtil.getLeftPaddedWithZeros(genId, 6); 
-		cif = "A49" + cif;
-		String razonSocial = "Razón Social " + genId;
-		String direccion = "Dirección " + genId;
-		int telefono = 600000000 + genId;
-		String email = "proveedor" + genId + "@gmail.com";
+  public static void insertProviders(Session s, int numClients) {
+    for (int id = 1; id <= numClients; id++) {
+    	insertProvider(s, id);
+    }
+  }
+  
+	public static void insertProvider(Session s, int codigo) {
+		String nombre="Pedro";
+		String apellido1="Aullador";
+		String apellido2="Pereira";
+		String lugarNacimineto="Zamora";
+		String fechaNacimiento="15/12/1995";
+		String direccion="C/ Me Falta un Tornillo";
+		String telefono="980656332";
+		String puesto="Recursos Humanos";
+		int codDepartamento = 50;
 		
-		Provider provider = new Provider(genId, cif, razonSocial, direccion, Integer.toString(telefono), email);
+		//public Empleado(int codigo, String nombre, String apellido1, String apellido2, String lugarNacimiento, String fechaNacimiento, String direccion, String telefono, String puesto, int codDepartamento)		
+		Empleado provider = new Empleado(codigo, nombre, apellido1, apellido2, lugarNacimineto, fechaNacimiento, direccion, telefono, puesto, codDepartamento);
 		s.save(provider);
 	}
 
 	// hql queries
-
-	// Native queries
-		
-	// Criteria queries
-	public static List<Provider> getAllProviders(Session s) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(Provider.class);
-		List<Provider> result = criteria.getExecutableCriteria(s).list();
-		return result;
+	public static List<Empleado> getAllClients() {
+		return getAllClients(HibernateUtil.retrieveSession());
 	}
 	
-	public static Provider getProvider(Session s, int providerId) {
-		// deprecado desde 5.2
-		Criteria criteria = s.createCriteria(Provider.class);
-		Provider result = (Provider)criteria.add(Restrictions.eq("providerId", providerId))
-											.setMaxResults(1)
-											.uniqueResult();
-		
-//		CriteriaBuilder builder = s.getCriteriaBuilder();
-//		CriteriaQuery<Provider> query = builder.createQuery(Provider.class);
-//		Root<Provider> root = query.from(Provider.class);
-//     	query.select(root).where(builder.equal(root.get("providerId"), providerId));
-//      Query<Provider> q = s.createQuery(query);
-//      Provider result = q.getSingleResult();
-		return result;
+	public static List<Empleado> getAllClients(Session s) {
+		String hQuery = "from Client";
+		List<Empleado> clientList = s.createQuery(hQuery, Empleado.class)
+				   	   			           .list();
+		return clientList;
 	}
+
+	
+	/*public static Client getClient(Session s, int clientId) {
+	  String hQuery = " from Client c " +
+	                  " where c.clientId = :clientId";
+	  Client client = s.createQuery(hQuery, Client.class)
+	                   .setParameter("clientId", clientId)
+	                   .setMaxResults(1)
+	                   .uniqueResult();
+    return client;
+	}*/
+	
+	// Native queries
+	/*public static List<Client> getClientsWithStatements(Session s) {
+	  String nQuery = 
+	      " select c.* from CLIENTE c " +
+        " left join FACTURA f " +
+	      "        on f.ID_CLIENTE = c.ID" +
+	      "       and f.ID_FACTURA = (select max(ID_FACTURA) from FACTURA" +
+	      "                           where ID_CLIENTE = c.ID)" +
+	      " where f.ID_FACTURA is not null";
+	  List<Client> clientList = s.createNativeQuery(nQuery)
+	                             .addEntity(Client.class)
+                               .list();
+	  return clientList;	  
+	}*/
+	
+	
+	// Criteria queries
 }

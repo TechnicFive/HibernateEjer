@@ -2,9 +2,10 @@
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.Session;
 
-import com.mysql.cj.xdevapi.Client;
 
 
 
@@ -16,35 +17,29 @@ public abstract class ClientDAO {
     }
   }
   
-	public static void insertClient(Session s, int id) {
-		String nif = StringUtil.getLeftPaddedWithZeros(id, 8); 
-		nif = nif + StringUtil.calculateDniLetter(nif);
-		String primerApellido = "1er Apellido " + id;
-		String segundoApellido = "2º Apellido " + id;
-		String nombre = "Nombre " + id;
-		String direccion = "Dirección " + id;
-		int telefono = 700000000 + id;
-		String email = "cliente" + id + "@gmail.com";
-		
-		//public Empleado(int codigo, String nombre, String apellido1, String apellido2, String lugarNacimiento, String fechaNacimiento, String direccion, String telefono, String puesto, int codDepartamento)
-		//public Departamento(int codigo, String nombre, int codResponsable)
+	public static void insertClient(Session s, int codigo) {
+		String nombre=JOptionPane.showInputDialog("Nombre del departamento");
+		int codResponsable = Integer.parseInt(JOptionPane.showInputDialog("Introduce la id del responsable"));
+		//public Departamento(int codigo, String nombre, int codResponsable) aqui hacemos la declaracion de insertar departamento
 		Departamento client = new Departamento(codigo, nombre, codResponsable);
+		client.toString();
 		s.save(client);
+		
 	}
 
 	// hql queries
-	public static List<Client> getAllClients() {
+	public static List<Departamento> getAllClients() {
 		return getAllClients(HibernateUtil.retrieveSession());
 	}
 	
-	public static List<Client> getAllClients(Session s) {
+	public static List<Departamento> getAllClients(Session s) {
 		String hQuery = "from Client";
-		List<Client> clientList = s.createQuery(hQuery, Client.class)
+		List<Departamento> clientList = s.createQuery(hQuery, Departamento.class)
 				   	   			           .list();
 		return clientList;
 	}
 	
-	public static Client getClient(Session s, int clientId) {
+	/*public static Client getClient(Session s, int clientId) {
 	  String hQuery = " from Client c " +
 	                  " where c.clientId = :clientId";
 	  Client client = s.createQuery(hQuery, Client.class)
@@ -52,10 +47,10 @@ public abstract class ClientDAO {
 	                   .setMaxResults(1)
 	                   .uniqueResult();
     return client;
-	}
+	}*/
 	
 	// Native queries
-	public static List<Client> getClientsWithStatements(Session s) {
+	/*public static List<Client> getClientsWithStatements(Session s) {
 	  String nQuery = 
 	      " select c.* from CLIENTE c " +
         " left join FACTURA f " +
@@ -67,7 +62,7 @@ public abstract class ClientDAO {
 	                             .addEntity(Client.class)
                                .list();
 	  return clientList;	  
-	}
+	}*/
 	
 	
 	// Criteria queries
