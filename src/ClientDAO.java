@@ -12,9 +12,9 @@ import org.hibernate.Session;
 public abstract class ClientDAO {
 	
   public static void insertClients(Session s, int numClients) {
-    for (int id = 1; id <= numClients; id++) {
-      insertClient(s, id);
-    }
+    //for (int id = 1; id <= numClients; id++) {
+      insertClient(s, numClients);
+    //}
   }
   
 	public static void insertClient(Session s, int codigo) {
@@ -33,7 +33,7 @@ public abstract class ClientDAO {
 	}
 	
 	public static List<Departamento> getAllClients(Session s) {
-		String hQuery = "from Client";
+		String hQuery = "from Departamento";
 		List<Departamento> clientList = s.createQuery(hQuery, Departamento.class)
 				   	   			           .list();
 		return clientList;

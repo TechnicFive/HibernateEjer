@@ -20,10 +20,10 @@ public abstract class ProviderDAO {
 		String apellido1="Aullador";
 		String apellido2="Pereira";
 		String lugarNacimineto="Zamora";
-		String fechaNacimiento="15/12/1995";
+		String fechaNacimiento="15121995";
 		String direccion="C/ Me Falta un Tornillo";
 		String telefono="980656332";
-		String puesto="Recursos Humanos";
+		String puesto="Humanos";
 		int codDepartamento = 50;
 		
 		//public Empleado(int codigo, String nombre, String apellido1, String apellido2, String lugarNacimiento, String fechaNacimiento, String direccion, String telefono, String puesto, int codDepartamento)		
@@ -37,7 +37,7 @@ public abstract class ProviderDAO {
 	}
 	
 	public static List<Empleado> getAllClients(Session s) {
-		String hQuery = "from Client";
+		String hQuery = "from Empleado";
 		List<Empleado> clientList = s.createQuery(hQuery, Empleado.class)
 				   	   			           .list();
 		return clientList;
