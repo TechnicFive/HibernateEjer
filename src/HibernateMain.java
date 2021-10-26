@@ -35,16 +35,19 @@ public class HibernateMain {
 
 			
 			// Insertamos proveedores
-			//ClientDAO.insertClients(session, codigo);
-			//ClientDAO.getDelete(session, Integer.parseInt(JOptionPane.showInputDialog("Escriba la id del empleado")));
+			ClientDAO.insertClients(session, codigo);
+			ClientDAO.getDelete(session, Integer.parseInt(JOptionPane.showInputDialog("Escriba la id del empleado")));
 			ClientDAO.actualizacionDepar(session, Integer.parseInt(JOptionPane.showInputDialog("Escriba la id del empleado que quieres actualizar")));
 			
-			/*// Recuperamos y listamos proveedores
-			List<Departamento> providers = ClientDAO.getAllClients(session);
-			logger.info(String.format("%1$s: number of providers = %2$s.", methodName, providers.size()));
-			providers.stream().forEach(x -> logger.info(String.format("%1$s: ---> %2$s.", methodName, x.toString())));
 			
-			// Actualizamos proveedor 1
+			// Recuperamos y listamos proveedores
+			List<Departamento> providers = ClientDAO.getAllClients(session);
+			System.out.println();
+			System.out.println();
+			System.out.println(providers);
+			System.out.println();
+			System.out.println();
+			/*// Actualizamos proveedor 1
 			Departamento provider = providers.stream()
   										 .filter(x -> x.getCodigo() == 5)
   										 .findFirst()

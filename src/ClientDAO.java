@@ -34,6 +34,7 @@ public abstract class ClientDAO {
 		return getAllClients(HibernateUtil.retrieveSession());
 	}
 	
+	//Listar
 	public static List<Departamento> getAllClients(Session s) {
 		String hQuery = "from Departamento";
 		List<Departamento> clientList = s.createQuery(hQuery, Departamento.class)
@@ -61,8 +62,7 @@ public abstract class ClientDAO {
 			s.update(Departamento.class.getName(), depar);
 		}
 	}
-	//Lectura
-	
+
 	//Borrado
 	public static void getDelete(Session s, int clientId) {
 		Departamento depar= new Departamento();
