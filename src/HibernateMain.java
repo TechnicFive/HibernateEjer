@@ -2,6 +2,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.BasicConfigurator;
@@ -33,14 +37,39 @@ public class HibernateMain {
 
 			
 			// Insertamos proveedores
+<<<<<<< feature_anotaciones
 			ClientDAO.insertClients(session, codigo);
+=======
+			/*ClientDAO.insertClients(session, codigo);
+			ClientDAO.getDelete(session, Integer.parseInt(JOptionPane.showInputDialog("Escriba la id del empleado")));
+			ClientDAO.actualizacionDepar(session, Integer.parseInt(JOptionPane.showInputDialog("Escriba la id del empleado que quieres actualizar")));
+>>>>>>> local
 			
 			/*// Recuperamos y listamos proveedores
 			List<Departamento> providers = ClientDAO.getAllClients(session);
+<<<<<<< feature_anotaciones
 			logger.info(String.format("%1$s: number of providers = %2$s.", methodName, providers.size()));
 			providers.stream().forEach(x -> logger.info(String.format("%1$s: ---> %2$s.", methodName, x.toString())));
 			
 			// Actualizamos proveedor 1
+=======
+			System.out.println();
+			System.out.println();
+			System.out.println(providers);
+			System.out.println();
+			System.out.println();*/
+			
+			
+			
+			//Vamos a hacer lo de Criteria
+			
+			ProviderDAO.getProvider(session, Integer.parseInt(JOptionPane.showInputDialog("Escriba la id del empleado que quieres actualizar")));
+			
+			
+			
+			
+			/*// Actualizamos proveedor 1
+>>>>>>> local
 			Departamento provider = providers.stream()
   										 .filter(x -> x.getCodigo() == 5)
   										 .findFirst()

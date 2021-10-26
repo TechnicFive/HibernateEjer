@@ -2,7 +2,13 @@
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 
 
@@ -43,32 +49,28 @@ public abstract class ProviderDAO {
 		return clientList;
 	}
 
-	
-	/*public static Client getClient(Session s, int clientId) {
-	  String hQuery = " from Client c " +
-	                  " where c.clientId = :clientId";
-	  Client client = s.createQuery(hQuery, Client.class)
-	                   .setParameter("clientId", clientId)
-	                   .setMaxResults(1)
-	                   .uniqueResult();
-    return client;
-	}*/
-	
-	// Native queries
-	/*public static List<Client> getClientsWithStatements(Session s) {
-	  String nQuery = 
-	      " select c.* from CLIENTE c " +
-        " left join FACTURA f " +
-	      "        on f.ID_CLIENTE = c.ID" +
-	      "       and f.ID_FACTURA = (select max(ID_FACTURA) from FACTURA" +
-	      "                           where ID_CLIENTE = c.ID)" +
-	      " where f.ID_FACTURA is not null";
-	  List<Client> clientList = s.createNativeQuery(nQuery)
-	                             .addEntity(Client.class)
-                               .list();
-	  return clientList;	  
-	}*/
+	public static void getProvider(Session s, int providerId) {
+		// deprecado desde 5.2
+		
+		//Esto vale para mostrar muchos
+		Criteria criteria = s.createCriteria(Empleado.class);
+		List<Empleado> result = (List<Empleado>)criteria.add(Restrictions.eq("codDepartamento", providerId)).list();
+		System.out.println();
+		System.out.println();
+		result.stream().forEach(x -> System.out.println(x));
+		System.out.println();
+		System.out.println();
+
+		
+		//Esto vae para mostrar uno solo
+		/*CriteriaBuilder builder = s.getCriteriaBuilder();
+		CriteriaQuery<Empleado> query = builder.createQuery(Empleado.class);
+		Root<Empleado> root = query.from(Empleado.class);
+     	query.select(root).where(builder.equal(root.get("codDepartamento"), providerId));
+     	Query<Empleado> q = s.createQuery(query);
+     	Empleado result = q.getSingleResult();
+		System.err.println(result.toString());*/
+	}
 	
 	
-	// Criteria queries
 }
